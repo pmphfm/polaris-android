@@ -75,4 +75,32 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="InfoLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">2dp</item>
+    </style>
+
+    <style name="InfoVerticalLayout" parent="InfoLinearLayout">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="InfoHorizontalLayout" parent="InfoLinearLayout">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="InfoLabelTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:layout_weight">3</item>
+    </style>
+
+    <style name="InfoFieldTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
 </resources>

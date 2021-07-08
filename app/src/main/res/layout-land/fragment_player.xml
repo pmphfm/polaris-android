@@ -27,9 +27,34 @@
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:contentDescription="@string/player_artwork"
+            android:visibility="invisible"
             tools:src="@drawable/artwork" />
 
     </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:id="@+id/viewGroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        app:layout_constraintEnd_toStartOf="@id/controls">
+
+        <!--
+              This section is to display the track's extended info.
+        -->
+        <LinearLayout
+            android:id="@+id/track_info"
+            style="@style/InfoVerticalLayout">
+
+            <include
+                android:id="@+id/extent_info_include"
+                layout="@layout/view_extended_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+    </LinearLayout>
 
     <include
         android:id="@+id/controls"

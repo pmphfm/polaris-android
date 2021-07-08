@@ -37,6 +37,36 @@
     <string name="details_disc_number">Disc Number</string>
     <string name="details_duration">Duration</string>
 
+    <string name="player_track_info">Track Info</string>
+
+    <!-- Labels don't change when track changes -->
+    <string name="title_label">Title: </string>
+    <string name="album_label">Album: </string>
+    <string name="artist_label">Artist: </string>
+    <string name="composer_label">Composer: </string>
+    <string name="lyricist_label">Lyricist: </string>
+    <string name="genre_label">Genre: </string>
+    <string name="album_artist_label">Album Artist: </string>
+    <string name="year_label">Year: </string>
+    <string name="duration_label">Duration: </string>
+    <string name="track_number_label">Track#: </string>
+    <string name="disc_number_label">Disc#: </string>
+    <string name="copyright_label">Copyright: </string>
+
+    <!-- Fields change when track changes -->
+    <string name="title_field">""</string>
+    <string name="album_field">""</string>
+    <string name="artist_field">""</string>
+    <string name="composer_field">""</string>
+    <string name="lyricist_field">""</string>
+    <string name="genre_field">""</string>
+    <string name="album_artist_field">""</string>
+    <string name="year_field">""</string>
+    <string name="duration_field">""</string>
+    <string name="track_number_field">""</string>
+    <string name="disc_number_field">""</string>
+    <string name="copyright_field">""</string>
+
     <string name="pref_server_url">Server address</string>
     <string name="pref_username">Username</string>
     <string name="pref_password">Password</string>

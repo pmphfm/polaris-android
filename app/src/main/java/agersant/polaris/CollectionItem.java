@@ -21,6 +21,11 @@ public class CollectionItem implements Cloneable, Serializable {
     private int discNumber;
     private int duration;
     private int year;
+    private String lyricist;
+    private String composer;
+    private String genre;
+    private String copyright;
+
     @SuppressWarnings("WeakerAccess")
     boolean isDirectory;
 
@@ -50,6 +55,11 @@ public class CollectionItem implements Cloneable, Serializable {
         discNumber = getOptionalInt(fields, "disc_number");
         duration = getOptionalInt(fields, "duration");
         year = getOptionalInt(fields, "year");
+        lyricist = getOptionalString(fields, "lyricist");
+        composer = getOptionalString(fields, "composer");
+        genre = getOptionalString(fields, "genre");
+        copyright = getOptionalString(fields, "copyright");
+
     }
 
     private String getOptionalString(JsonObject fields, String key) {
@@ -126,6 +136,23 @@ public class CollectionItem implements Cloneable, Serializable {
     public int getYear() {
         return year;
     }
+
+    public String getLyricist() {
+        return lyricist;
+    }
+
+    public String getCopyright() {
+        return copyright;
+    }
+
+    public String getComposer() {
+        return composer;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
 
     public static class Directory extends CollectionItem {
         public static class Deserializer implements JsonDeserializer<CollectionItem> {

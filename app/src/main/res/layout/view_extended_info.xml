@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--
+      This section is to display the track's extended info.
+      Maybe this is not the best way. A table might serve
+      better here.
+-->
+    <LinearLayout
+        android:id="@+id/track_info"
+        style="@style/InfoVerticalLayout">
+
+        <LinearLayout style="@style/InfoHorizontalLayout">
+
+            <TextView
+                android:id="@+id/title_label"
+                style="@style/InfoLabelTextView"
+                android:text="@string/title_label" />
+
+            <TextView
+                android:id="@+id/title_field"
+                style="@style/InfoFieldTextView"
+                android:text="@string/title_field" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/InfoHorizontalLayout">
+
+            <TextView
+                android:id="@+id/album_label"
+                style="@style/InfoLabelTextView"
+                android:text="@string/album_label" />
+
+            <TextView
+                android:id="@+id/album_field"
+                style="@style/InfoFieldTextView"
+                android:text="@string/album_field" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/InfoHorizontalLayout">
+
+            <TextView
+                android:id="@+id/artist_label"
+                style="@style/InfoLabelTextView"
+                android:text="@string/artist_label" />
+
+            <TextView
+                android:id="@+id/artist_field"
+                style="@style/InfoFieldTextView"
+                android:text="@string/artist_field" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/InfoHorizontalLayout">
+
+            <TextView
+                android:id="@+id/composer_label"
+                style="@style/InfoLabelTextView"
+                android:text="@string/composer_label" />
+
+            <TextView
+                android:id="@+id/composer_field"
+                style="@style/InfoFieldTextView"
+                android:text="@string/composer_field" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/InfoHorizontalLayout">
+
+            <TextView
+                android:id="@+id/lyricist_label"
+                style="@style/InfoLabelTextView"
+                android:text="@string/lyricist_label" />
+
+            <TextView
+                android:id="@+id/lyricist_field"
+                style="@style/InfoFieldTextView"
+                android:text="@string/lyricist_field" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/InfoHorizontalLayout">
+
+            <TextView
+                android:id="@+id/genre_label"
+                style="@style/InfoLabelTextView"
+                android:text="@string/genre_label" />
+
+            <TextView
+                android:id="@+id/genre_field"
+                style="@style/InfoFieldTextView"
+                android:text="@string/genre_field" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/InfoHorizontalLayout">
+
+            <TextView
+                android:id="@+id/album_artist_label"
+                style="@style/InfoLabelTextView"
+                android:text="@string/album_artist_label" />
+
+            <TextView
+                android:id="@+id/album_artist_field"
+                style="@style/InfoFieldTextView"
+                android:text="@string/album_artist_field" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/InfoHorizontalLayout">
+
+            <TextView
+                android:id="@+id/year_label"
+                style="@style/InfoLabelTextView"
+                android:text="@string/year_label" />
+
+            <TextView
+                android:id="@+id/year_field"
+                style="@style/InfoFieldTextView"
+                android:text="@string/year_field" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/InfoHorizontalLayout">
+
+            <TextView
+                android:id="@+id/duration_label"
+                style="@style/InfoLabelTextView"
+                android:text="@string/duration_label" />
+
+            <TextView
+                android:id="@+id/duration_field"
+                style="@style/InfoFieldTextView"
+                android:text="@string/duration_field" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/InfoHorizontalLayout">
+
+            <TextView
+                android:id="@+id/track_number_label"
+                style="@style/InfoLabelTextView"
+                android:text="@string/track_number_label" />
+
+            <TextView
+                android:id="@+id/track_number_field"
+                style="@style/InfoFieldTextView"
+                android:text="@string/track_number_field" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/InfoHorizontalLayout">
+
+            <TextView
+                android:id="@+id/disc_number_label"
+                style="@style/InfoLabelTextView"
+                android:text="@string/disc_number_label" />
+
+            <TextView
+                android:id="@+id/disc_number_field"
+                style="@style/InfoFieldTextView"
+                android:text="@string/disc_number_field" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/InfoHorizontalLayout">
+
+            <TextView
+                android:id="@+id/copyright_label"
+                style="@style/InfoLabelTextView"
+                android:text="@string/copyright_label" />
+
+            <TextView
+                android:id="@+id/copyright_field"
+                style="@style/InfoFieldTextView"
+                android:text="@string/copyright_field" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

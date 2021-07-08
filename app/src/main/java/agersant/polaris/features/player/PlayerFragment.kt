@@ -1,9 +1,6 @@
 package agersant.polaris.features.player
 
-import agersant.polaris.PlaybackQueue
-import agersant.polaris.PolarisApplication
-import agersant.polaris.PolarisPlayer
-import agersant.polaris.R
+import agersant.polaris.*
 import agersant.polaris.api.API
 import agersant.polaris.databinding.FragmentPlayerBinding
 import agersant.polaris.util.formatTime
@@ -11,9 +8,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Html
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -44,6 +44,8 @@ class PlayerFragment : Fragment() {
     private lateinit var api: API
     private lateinit var player: PolarisPlayer
     private lateinit var playbackQueue: PlaybackQueue
+
+    private lateinit var toggleTrackInfo: ImageView
 
     private fun subscribeToEvents() {
         val filter = IntentFilter().apply {
@@ -129,6 +131,8 @@ class PlayerFragment : Fragment() {
         seekBar = binding.controls.seekBar
         buffering = binding.controls.buffering
 
+        toggleTrackInfo = binding.controls.toggleTrackInfo
+
         seekBar.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
             override fun onStartTrackingTouch(slider: Slider) {
                 seeking = true
@@ -151,12 +155,33 @@ class PlayerFragment : Fragment() {
             }
         }
 
+        toggleTrackInfo.setOnClickListener {
+            val infoVisible = binding.trackInfo!!.getVisibility()
+            val artworkVisible = binding.artwork.getVisibility()
+            binding.trackInfo.setVisibility(artworkVisible)
+            binding.artwork.setVisibility(infoVisible)
+        }
+
         if (viewModel.detailsShowing) {
             showDetails()
         }
 
         return binding.root
     }
+
+    private fun labelIds(): IntArray? {
+        return intArrayOf(R.id.title_label, R.id.album_label, R.id.artist_label, R.id.composer_label, R.id.lyricist_label,
+                R.id.genre_label, R.id.album_artist_label, R.id.year_label, R.id.duration_label, R.id.track_number_label,
+                R.id.disc_number_label, R.id.copyright_label)
+    }
+
+    private fun fieldIds(): IntArray? {
+        return intArrayOf(R.id.title_field, R.id.album_field, R.id.artist_field, R.id.composer_field, R.id.lyricist_field,
+                R.id.genre_field, R.id.album_artist_field, R.id.year_field, R.id.duration_field, R.id.track_number_field,
+                R.id.disc_number_field, R.id.copyright_field
+        )
+    }
+
 
     override fun onStart() {
         refresh()
@@ -205,6 +230,8 @@ class PlayerFragment : Fragment() {
         } else {
             artwork.setImageResource(R.drawable.ic_fallback_artwork)
         }
+        item?:return
+        updateInfoView(item)
     }
 
     private fun updateControls() {
@@ -252,5 +279,39 @@ class PlayerFragment : Fragment() {
             viewModel.detailsShowing = false
         }
         viewModel.detailsShowing = true
+
+
+    }
+
+    private fun idToInfo(item: CollectionItem, id: Int): String? {
+        return when (id) {
+            R.id.title_field -> item.title
+            R.id.album_field -> item.album
+            R.id.artist_field -> item.artist
+            R.id.composer_field -> item.composer
+            R.id.lyricist_field -> item.lyricist
+            R.id.genre_field -> item.genre
+            R.id.album_artist_field -> item.albumArtist
+            R.id.year_field -> item.year.toString()
+            R.id.duration_field -> item.duration.toString()
+            R.id.track_number_field -> item.trackNumber.toString()
+            R.id.disc_number_field -> item.discNumber.toString()
+            R.id.copyright_field -> item.copyright
+            else -> throw IllegalStateException("Unexpected value: $id")
+        }
+    }
+
+    private fun updateInfoView(item: CollectionItem) {
+        val view = view ?: return
+        for (id in fieldIds()!!) {
+            val field: TextView = view.findViewById(id)
+
+            val info = idToInfo(item, id)
+            val formatted_text = "<b>" + (info ?: "") + "</b>"
+
+            if (Build.VERSION.SDK_INT >= 24) {
+                field.setText(Html.fromHtml(formatted_text, Html::FROM_HTML_MODE_COMPACT.get()))
+            }
+        }
     }
 }

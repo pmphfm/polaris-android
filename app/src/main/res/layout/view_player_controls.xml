@@ -187,4 +187,22 @@
         app:layout_constraintTop_toBottomOf="@id/seek_bar_barrier"
         app:tint="?colorOnBackground" />
 
+    <!--
+          This section is to display the track's extended info.
+          Maybe this is not the best way. A table might serve
+          better here.
+    -->
+    <ImageView
+        android:id="@+id/toggleTrackInfo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="24dp"
+        android:src="@drawable/ic_audiotrack_black_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/next"
+        app:layout_constraintTop_toBottomOf="@id/seek_bar_barrier"
+        android:tint="?colorOnBackground" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
