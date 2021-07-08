@@ -2,6 +2,7 @@ package agersant.polaris.api.remote;
 
 
 import android.net.Uri;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,6 +50,43 @@ public class APIVersion3 extends APIBase
 
     public void browse(String path, final ItemsCallback handlers) {
         String requestURL = ServerAPI.getAPIRootURL() + "/browse/" + Uri.encode(path);
+        HttpUrl parsedURL = HttpUrl.parse(requestURL);
+        if (parsedURL == null) {
+            handlers.onError();
+            return;
+        }
+
+        Request request = new Request.Builder().url(parsedURL).build();
+        Callback callback = new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                handlers.onError();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.body() == null) {
+                    handlers.onError();
+                    return;
+                }
+
+                Type collectionType = new TypeToken<ArrayList<CollectionItem>>() {
+                }.getType();
+                ArrayList<CollectionItem> items;
+                try {
+                    items = gson.fromJson(response.body().charStream(), collectionType);
+                } catch (JsonSyntaxException e) {
+                    handlers.onError();
+                    return;
+                }
+                handlers.onSuccess(items);
+            }
+        };
+        requestQueue.requestAsync(request, callback);
+    }
+
+    public void smartSearch(String query, final ItemsCallback handlers) {
+        String requestURL = ServerAPI.getAPIRootURL() + "/search/" + Uri.encode(query);
         HttpUrl parsedURL = HttpUrl.parse(requestURL);
         if (parsedURL == null) {
             handlers.onError();

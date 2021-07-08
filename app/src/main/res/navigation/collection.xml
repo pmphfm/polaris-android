@@ -28,4 +28,5 @@
         android:label="@string/collection"
         tools:layout="@layout/fragment_browse" />
 
+
 </navigation>

@@ -14,4 +14,6 @@ public interface IPolarisAPI {
 
     void flatten(String path, final ItemsCallback handlers);
 
+    void smartSearch(String query, final ItemsCallback handlers);
+
 }

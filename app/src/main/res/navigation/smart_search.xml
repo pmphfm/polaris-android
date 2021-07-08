@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/smart_search"
+    app:startDestination="@id/nav_smart_search_collection">
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="agersant.polaris.features.settings.SettingsFragment"
+        android:label="@string/settings" />
+
+    <fragment
+        android:id="@+id/nav_smart_search_collection"
+        android:name="agersant.polaris.features.smart_search.CollectionFragment"
+        android:label="@string/smart_search_collection"
+        tools:layout="@layout/fragment_smart_search_collection">
+
+        <action
+            android:id="@+id/action_nav_collection_to_nav_search"
+            app:destination="@id/nav_smart_search" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_smart_search"
+        android:name="agersant.polaris.features.smart_search.SmartSearchFragment"
+        android:label="@string/smart_search_collection"
+        tools:layout="@layout/fragment_smart_search" />
+
+</navigation>

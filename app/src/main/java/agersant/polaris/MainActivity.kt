@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             R.navigation.collection,
             R.navigation.queue,
             R.navigation.now_playing,
+            R.navigation.smart_search,
         )
 
         val navController = bottomNav.setupWithNavController(
@@ -69,7 +70,8 @@ class MainActivity : AppCompatActivity() {
                 setOf(
                     R.id.nav_collection,
                     R.id.nav_queue,
-                    R.id.nav_now_playing,
+                     R.id.nav_now_playing,
+            R.id.nav_smart_search_collection,
                 ),
                 backdropLayout,
             )

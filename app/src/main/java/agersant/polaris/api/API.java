@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.lang.ref.WeakReference;
@@ -82,6 +83,14 @@ public class API {
 
     public void browse(String path, ItemsCallback handlers) {
         getAPI().browse(path, handlers);
+    }
+
+    public void smartSearch(String query, ItemsCallback handlers) {
+        if (query != null && query.trim().isEmpty()) {
+            handlers.onError();
+            return;
+        }
+        getAPI().smartSearch(query, handlers);
     }
 
     public void flatten(String path, ItemsCallback handlers) {

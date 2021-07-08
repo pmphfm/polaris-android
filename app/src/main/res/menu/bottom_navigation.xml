@@ -13,4 +13,8 @@
         android:id="@+id/now_playing"
         android:icon="@drawable/ic_play_circle_outline_black_24dp"
         android:title="@string/now_playing" />
+    <item
+        android:id="@+id/smart_search"
+        android:icon="?android:attr/actionModeWebSearchDrawable"
+        android:title="@string/smart_search_collection" />
 </menu>

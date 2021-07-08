@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    tools:context="agersant.polaris.features.smart_search.CollectionFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <EditText
+            android:id="@+id/smart_search_field"
+            style="@style/SingleLineTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="hint: artist:&quot;some artist&quot; composer:Burman some song"
+            android:maxLines="1" />
+
+        <Button
+            android:id="@+id/smart_search_button"
+            style="@style/CollectionButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:icon="@drawable/ic_smart_search" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        tools:context="agersant.polaris.features.smart_search.CollectionFragment">
+
+
+        <View style="@style/DialogDivider" />
+
+        <View style="@style/DialogDivider" />
+
+        <View style="@style/DialogDivider" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="317dp"
+            android:gravity="center_vertical"
+            android:lineSpacingMultiplier="1.2"
+            android:text="@string/smart_search_hints"
+            android:textColor="@color/playlistInstructions"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>

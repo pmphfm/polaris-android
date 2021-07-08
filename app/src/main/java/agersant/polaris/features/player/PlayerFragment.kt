@@ -156,7 +156,7 @@ class PlayerFragment : Fragment() {
         }
 
         toggleTrackInfo.setOnClickListener {
-            val infoVisible = binding.trackInfo!!.getVisibility()
+            val infoVisible = binding.trackInfo.getVisibility()
             val artworkVisible = binding.artwork.getVisibility()
             binding.trackInfo.setVisibility(artworkVisible)
             binding.artwork.setVisibility(infoVisible)

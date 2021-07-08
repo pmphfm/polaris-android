@@ -7,14 +7,28 @@
     <string name="collection_recently_added">Recently Added</string>
     <string name="collection_playlists">Playlists</string>
 
+    <string name="collection_smart_search_directories">Search Directories</string>
+    <string name="collection_smart_search_button">Search</string>
     <string name="browse_error">An error occurred while listing content</string>
     <string name="browse_error_retry">Retry</string>
     <string name="browse_disc_number">Disc %1$d</string>
+
+    <string name="smart_search_collection">Search</string>
+    <string name="smart_search_error">An error occurred while listing content</string>
+    <string name="smart_search_error_retry">Retry</string>
+    <string name="smart_search_disc_number">Disc %1$d</string>
+    <string name="smart_search_hints">App allows searching specific fields in the tag. The allowed fields are artist, album_artist, composer, lyricist, album, title, genre. A set of words can be delimited with &quot; or ' Ex: composer:'first last name' or title:hello. </string>
+    <string name="smart_search_queue_all">Queue all search results</string>
 
     <string name="queue">Queue</string>
     <string name="queue_empty">Make a playlist by swiping music from your collection to here.</string>
     <string name="queue_downloading">Downloading</string>
     <string name="queue_cached">Cached Locally</string>
+
+    <string name="search_empty">Search something composer:"some name".</string>
+    <string name="search_downloading">Downloading</string>
+    <string name="search_cached">Cached Locally</string>
+
 
     <string name="now_playing">Now Playing</string>
     <string name="player_artwork">Album Artwork</string>

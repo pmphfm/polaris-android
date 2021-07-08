@@ -1,6 +1,8 @@
 package agersant.polaris.api.remote;
 
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
@@ -80,6 +82,10 @@ public class APIVersion2 extends APIBase
             }
         };
         requestQueue.requestAsync(request, callback);
+    }
+
+    public void smartSearch(String query, final ItemsCallback handlers) {
+        handlers.onError();
     }
 
     void getAlbums(String url, final ItemsCallback handlers) {

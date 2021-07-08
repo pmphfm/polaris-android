@@ -1,6 +1,7 @@
 package agersant.polaris.api.local;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.google.android.exoplayer2.source.MediaSource;
 
@@ -56,6 +57,11 @@ public class LocalAPI implements IPolarisAPI {
             handlers.onSuccess(items);
         }
     }
+
+    public void smartSearch(String query, final ItemsCallback handlers) {
+        handlers.onError();
+    }
+
 
     public void flatten(String path, ItemsCallback handlers) {
         ArrayList<CollectionItem> items = offlineCache.flatten(path);
