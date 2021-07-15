@@ -17,7 +17,7 @@
     <string name="smart_search_error">An error occurred while listing content</string>
     <string name="smart_search_error_retry">Retry</string>
     <string name="smart_search_disc_number">Disc %1$d</string>
-    <string name="smart_search_hints">App allows searching specific fields in the tag. The allowed fields are artist, album_artist, composer, lyricist, album, title, genre. A set of words can be delimited with &quot; or ' Ex: composer:'first last name' or title:hello. </string>
+    <string name="smart_search_hints">App allows searching specific fields in the tag. The allowed fields are artist, album_artist, composer, lyricist, album, title, genre and year. A set of words can be delimited with " or \' Ex: composer:'first last name' or title:hello. Year can be single year(year:1975) or a range(year:1975–1985).</string>
     <string name="smart_search_queue_all">Queue all search results</string>
 
     <string name="queue">Queue</string>

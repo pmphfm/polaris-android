@@ -292,10 +292,10 @@ class PlayerFragment : Fragment() {
             R.id.lyricist_field -> item.lyricist
             R.id.genre_field -> item.genre
             R.id.album_artist_field -> item.albumArtist
-            R.id.year_field -> item.year.toString()
-            R.id.duration_field -> item.duration.toString()
-            R.id.track_number_field -> item.trackNumber.toString()
-            R.id.disc_number_field -> item.discNumber.toString()
+            R.id.year_field -> if (item.year == -1) "n/a" else item.year.toString()
+            R.id.duration_field -> if(item.duration == -1) "n/a" else item.duration.toString()
+            R.id.track_number_field -> if (item.trackNumber == -1) "n/a" else item.trackNumber.toString()
+            R.id.disc_number_field -> if (item.discNumber == -1) "1" else item.discNumber.toString()
             R.id.copyright_field -> item.copyright
             else -> throw IllegalStateException("Unexpected value: $id")
         }
