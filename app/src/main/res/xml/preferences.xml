@@ -45,4 +45,9 @@
         android:key="@string/pref_key_theme"
         android:title="@string/pref_theme"
         app:useSimpleSummaryProvider="true" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_key_enable_rj"
+        android:title="@string/pref_enable_rj"
+        app:useSimpleSummaryProvider="true" />
 </PreferenceScreen>

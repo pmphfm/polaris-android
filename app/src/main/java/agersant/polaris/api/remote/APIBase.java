@@ -61,4 +61,9 @@ abstract class APIBase {
         return downloadQueue.getAudio(item);
     }
 
+    public Uri getAnnouncementUri(String queries) {
+        String url = ServerAPI.getAPIRootURL() + "/rj/songs?" + queries;
+        return Uri.parse(url);
+    }
+
 }

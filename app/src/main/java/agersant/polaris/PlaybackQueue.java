@@ -10,6 +10,7 @@ import java.util.Collections;
 
 import agersant.polaris.api.local.OfflineCache;
 import agersant.polaris.api.remote.DownloadQueue;
+import agersant.polaris.CollectionItem.Announcement;
 
 public class PlaybackQueue {
 
@@ -21,13 +22,33 @@ public class PlaybackQueue {
     public static final String REMOVED_ITEM = "REMOVED_ITEM";
     public static final String REMOVED_ITEMS = "REMOVED_ITEMS";
     public static final String REORDERED_ITEMS = "REORDERED_ITEMS";
+    private final String rjEnablePreferenceKey;
 
     private ArrayList<CollectionItem> content;
     private Ordering ordering;
+    private boolean rjEnabled = true;
+    final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener;
 
     PlaybackQueue() {
         content = new ArrayList<>();
         ordering = Ordering.SEQUENCE;
+
+        PolarisApplication application = PolarisApplication.getInstance();
+        rjEnablePreferenceKey = application.getResources().getString(R.string.pref_key_enable_rj);
+        sharedPreferenceChangeListener = (prefs, key) -> {
+
+            if (key.equals(rjEnablePreferenceKey)) {
+                rjEnabled = prefs.getBoolean(rjEnablePreferenceKey, false);
+                if (rjEnabled) {
+                    rearrangeAnnouncements();
+                } else {
+                    removeAnnouncementAndRearrange();
+                }
+            }
+        };
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(application);
+        rjEnabled = prefs.getBoolean(rjEnablePreferenceKey, false);
+        prefs.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
     ArrayList<CollectionItem> getContent() {
@@ -36,6 +57,7 @@ public class PlaybackQueue {
 
     void setContent(ArrayList<CollectionItem> content) {
         this.content = content;
+        rearrangeAnnouncements();
         broadcast(PlaybackQueue.OVERWROTE_QUEUE);
     }
 
@@ -78,6 +100,7 @@ public class PlaybackQueue {
         for (CollectionItem item : items) {
             addItemInternal(item);
         }
+        rearrangeAnnouncements();
         broadcast(PlaybackQueue.QUEUED_ITEMS);
         if (wasEmpty) {
             broadcast(PlaybackQueue.NO_LONGER_EMPTY);
@@ -87,6 +110,7 @@ public class PlaybackQueue {
     public void addItem(CollectionItem item) {
         boolean wasEmpty = size() == 0;
         addItemInternal(item);
+        rearrangeAnnouncements();
         broadcast(PlaybackQueue.QUEUED_ITEM);
         if (wasEmpty) {
             broadcast(PlaybackQueue.NO_LONGER_EMPTY);
@@ -95,6 +119,7 @@ public class PlaybackQueue {
 
     public void remove(int position) {
         content.remove(position);
+        rearrangeAnnouncements();
         broadcast(REMOVED_ITEM);
     }
 
@@ -105,6 +130,7 @@ public class PlaybackQueue {
 
     public void swap(int fromPosition, int toPosition) {
         Collections.swap(content, fromPosition, toPosition);
+        rearrangeAnnouncements();
         broadcast(REORDERED_ITEMS);
     }
 
@@ -116,6 +142,7 @@ public class PlaybackQueue {
         int high = Math.max(fromPosition, toPosition);
         int distance = fromPosition < toPosition ? -1 : 1;
         Collections.rotate(content.subList(low, high + 1), distance);
+        rearrangeAnnouncements();
         broadcast(REORDERED_ITEMS);
     }
 
@@ -223,5 +250,78 @@ public class PlaybackQueue {
         SEQUENCE,
         REPEAT_ONE,
         REPEAT_ALL,
+    }
+
+
+    boolean announcementAtWrongIndex() {
+        for (int i = 0; i < content.size() ; i ++) {
+            if (content.get(i).isAnnouncement() && (i%4 != 1)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void removeAnnouncementAndRearrange() {
+        boolean removed = false;
+        if (rjEnabled) {
+            return;
+        }
+        for (int i = 1; i < content.size() ; i ++) {
+            if (content.get(i).isAnnouncement()) {
+                content.remove(i);
+                i--;
+                removed = true;
+            }
+        }
+        if (removed) {
+            broadcast(REMOVED_ITEMS);
+        }
+    }
+
+    // If RJ service is enabled and requested then inserts announcements in the
+    // current playlist
+    // while queuing new tracks.
+    void rearrangeAnnouncements() {
+        if (!rjEnabled) {
+            return;
+        }
+
+        if (announcementAtWrongIndex()) {
+            removeAnnouncementAndRearrange();
+        }
+
+        boolean added = false;
+
+        // We iterate one more element than length of array to see if we can end the
+        // playlist with an announcement.
+        for (int i = 1; i < content.size() + 1; i = i + 4) {
+            CollectionItem prev, next = null, next_next = null;
+            // If this is already an announcement then we may need to update it because
+            // previous
+            // or next songs might have changed.
+            Announcement announcement;
+            if (i < content.size() && content.get(i).isAnnouncement()) {
+                announcement = (CollectionItem.Announcement) content.get(i);
+            } else {
+                announcement = new Announcement();
+                content.add(i, announcement);
+                added = true;
+            }
+            prev = content.get(i - 1);
+            if ((i + 1) < content.size()) {
+                next = content.get(i + 1);
+                if ((i + 2) < content.size()) {
+                    next_next = content.get(i + 2);
+                }
+            }
+
+            announcement.setItems(prev, next, next_next);
+        }
+
+        if (added) {
+            broadcast(QUEUED_ITEMS);
+            broadcast(REORDERED_ITEMS);
+        }
     }
 }

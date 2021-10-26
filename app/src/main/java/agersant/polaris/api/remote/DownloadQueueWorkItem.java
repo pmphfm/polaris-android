@@ -68,10 +68,31 @@ class DownloadQueueWorkItem {
         return isDataSourceIdle();
     }
 
+    Uri getUri() {
+        if (!item.isAnnouncement()) {
+            return serverAPI.getAudioUri(item.getPath());
+        }
+
+        String queries = "";
+
+        CollectionItem.Announcement announcement = (CollectionItem.Announcement)item;
+        if (announcement.getPrev() != null) {
+            queries = "prev=" + announcement.getPrev().getPath();
+            if (announcement.getNext() != null) {
+                queries += ("&next=" + announcement.getNext().getPath());
+                if (announcement.getNextNext() != null) {
+                    queries += ("&next_next=" + announcement.getNextNext().getPath());
+                }
+            }
+        }
+
+        return serverAPI.getAnnouncementUri(queries);
+    }
+
     void assignItem(CollectionItem item) {
         reset();
         this.item = item;
-        Uri uri = serverAPI.getAudioUri(item.getPath());
+        Uri uri = getUri();
         PolarisExoPlayerDataSourceFactory dsf = new PolarisExoPlayerDataSourceFactory(offlineCache, serverAPI.getAuth(), scratchFile, item);
         mediaSource = new ExtractorMediaSource.Factory(dsf).createMediaSource(uri);
         dataSource = dsf.createDataSource();

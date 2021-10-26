@@ -8,6 +8,7 @@ import com.google.gson.JsonParseException;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
+import java.security.MessageDigest;
 
 public class CollectionItem implements Cloneable, Serializable {
 
@@ -28,6 +29,8 @@ public class CollectionItem implements Cloneable, Serializable {
 
     @SuppressWarnings("WeakerAccess")
     boolean isDirectory;
+
+    boolean isAnnouncement = false;
 
     private CollectionItem() {
     }
@@ -153,6 +156,9 @@ public class CollectionItem implements Cloneable, Serializable {
         return genre;
     }
 
+    public boolean isAnnouncement() {
+        return isAnnouncement;
+    }
 
     public static class Directory extends CollectionItem {
         public static class Deserializer implements JsonDeserializer<CollectionItem> {
@@ -190,6 +196,78 @@ public class CollectionItem implements Cloneable, Serializable {
             }
             item.parseFields(fields);
             return item;
+        }
+    }
+
+
+    public static class Announcement extends CollectionItem {
+        CollectionItem prev;
+        CollectionItem next;
+        CollectionItem next_next;
+
+        // Replace '/' with '-' if item is not null. Else returns 'null'.
+        String pathTransform(CollectionItem item) {
+            if (item == null) {
+                return "null";
+            }
+            return item.getPath();
+        }
+
+        // The max path length on server and android device might not match. Shorten it to something that that is "generally" good.
+        String makePath(CollectionItem prev, CollectionItem next, CollectionItem next_next) {
+
+            try {
+                MessageDigest sha = MessageDigest.getInstance("SHA-256");
+                sha.update(pathTransform(prev).getBytes());
+                sha.update(pathTransform(next).getBytes());
+                sha.update(pathTransform(next_next).getBytes());
+                StringBuilder sb = new StringBuilder();
+                byte[] bytes = sha.digest();
+                for (byte aByte : bytes) {
+                    String hex = Integer.toHexString(0xFF & aByte);
+                    if (hex.length() == 1) {
+                        sb.append('0');
+                    }
+                    sb.append(hex);
+                }
+                return "rj_path_" + sb.toString();
+            } catch (Exception e) {
+                return "rj_path_" + pathTransform(prev) + pathTransform(next) + pathTransform(next_next);
+            }
+        }
+
+        void makeAnnouncement() {
+            isAnnouncement = true;
+            // TODO: Read these names from the server. Rj user settings store these to the database.
+            super.artist = "Ameen Sayani";
+            super.title = "Announcement";
+            super.album = "Geetmala";
+        }
+
+        Announcement() {
+            super();
+            isDirectory = false;
+            makeAnnouncement();
+            super.path = makePath(null, null, null);
+        }
+
+        public void setItems(CollectionItem prev, CollectionItem next, CollectionItem next_next) {
+            this.prev = prev;
+            this.next = next;
+            this.next_next = next_next;
+            super.path = makePath(prev, next, next_next);
+        }
+
+        public CollectionItem getPrev() {
+            return prev;
+        }
+
+        public CollectionItem getNext() {
+            return next;
+        }
+
+        public CollectionItem getNextNext() {
+            return next_next;
         }
     }
 }

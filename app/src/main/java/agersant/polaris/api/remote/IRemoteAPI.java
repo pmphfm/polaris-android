@@ -20,6 +20,8 @@ public interface IRemoteAPI extends IPolarisAPI {
 
     Uri getAudioUri(String path);
 
+    Uri getAnnouncementUri(String path);
+
     Uri getThumbnailUri(String path);
 
     ResponseBody getAudio(String path) throws IOException;

@@ -226,6 +226,14 @@ public class ServerAPI implements IRemoteAPI {
         return null;
     }
 
+    public Uri getAnnouncementUri(String queries) {
+        fetchAPIVersion();
+        if (currentVersion != null) {
+            return currentVersion.getAnnouncementUri(queries);
+        }
+        return null;
+    }
+
     public Uri getThumbnailUri(String path) {
         fetchAPIVersion();
         if (currentVersion != null) {
